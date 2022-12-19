@@ -1,0 +1,42 @@
+function inflationCalculator(){
+    let inflationRate = document.querySelector('#inflationRate');  //prvo uzimamo vrednost inputa stopa inflacije
+    let money = document.querySelector('#money');
+
+    inflationRate = parseFloat(inflationRate.value); //parseInt da bi string pretvorili u number, medjutim ovo je da nema decimala, a ako zelimo da imamo decimale u nasem racunu koristimo parseFloat
+    money = parseFloat(money.value) ; 
+
+    // console.log(inflationRate) ;
+    // console.log(money) ;
+
+    // let sabiranje = inflationRate + money ;
+
+    // console.log(sabiranje); //svaki put kada uzimamo vrednosti iz nekog inputa uvek ce da budu string zato ovo moramo pretvoriti u neki drugi broj
+
+    let years = document.querySelector('#years').value ; //uzimamo id od 
+    years = parseFloat(years) ;
+
+    // Formula za izracunavanje inflacije.
+    let worth = money + (money * (inflationRate / 100)) ;
+
+    // znaci uzeli smo trenutni novac + (trenutni  novac * (inflacija / 100)) ali ovo je stopa inflacije samo za jednu godinu jer years nismo ni upotrebili
+
+    console.log(worth) ;
+
+    for (let i = 1; i < years; i++){
+        worth += worth* (inflationRate / 100) ;
+    } 
+    //ovde koirstimo for (loop) petlju zbog toga sto treba worth da izracunamo za tipa 10 godina,  jer ovo worth kruzi jer se abdejtuje worth posle prvog kruga je npr. 1020e ==> u drugom krugu on ga racuna 1020 pa opet ponavlja operaciju = 1040, u sledecem krugu pocinje sa 1040 itd itd...
+
+    console.log(worth);
+
+    //sada dole ispod kreiramo poruku koja ce da se ispise
+
+    worth = worth.toFixed(2) ;
+
+    let newElement = document.createElement('div') ;
+    newElement.className = 'new-value' ;
+    newElement.innerText = `Današnjih ${money}€ vredi isto kao ${worth}€ za ${years} godina.`
+
+    document.querySelector('.container').appendChild(newElement) ; 
+
+}
